@@ -10,19 +10,19 @@ import UIKit
 class MovieTableViewCell: UITableViewCell {
 	
 	private lazy var moviePosterImageView: UIImageView = {
-		let imageView = UIImageView(image: UIImage.avatar)
+		let imageView = UIImageView()
 		imageView.translatesAutoresizingMaskIntoConstraints = false
-		imageView.contentMode = .scaleAspectFit
-		imageView.layer.cornerRadius = 12
-		imageView.clipsToBounds = true
+		imageView.contentMode = .scaleAspectFill
+		imageView.layer.cornerRadius = 8
+		imageView.layer.masksToBounds = true
 		return imageView
 	}()
 	
 	private lazy var movieTitleLabel: UILabel = {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.text = "Avatar"
-		label.font = .boldSystemFont(ofSize: 20)
+		label.font = .boldSystemFont(ofSize: 18)
+		label.numberOfLines = 0
 		label.textColor = .white
 		return label
 	}()
@@ -30,11 +30,16 @@ class MovieTableViewCell: UITableViewCell {
 	private lazy var movieReleaseLabel: UILabel = {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.text = "Lançamento: 18/12/2009"
-		label.font = .systemFont(ofSize: 18)
+		label.font = .systemFont(ofSize: 14)
 		label.textColor = .white.withAlphaComponent(0.75)
 		return label
 	}()
+	
+	func configureCell(movie: Movie) {
+		movieTitleLabel.text = movie.title
+		moviePosterImageView.image = UIImage(named: movie.image)
+		movieReleaseLabel.text = "Lançamento \(movie.releadeDate)"
+	}
 	
 	private func addSubviews() {
 		addSubview(moviePosterImageView)
@@ -44,16 +49,17 @@ class MovieTableViewCell: UITableViewCell {
 	
 	private func setupConstraints() {
 		NSLayoutConstraint.activate([
-			moviePosterImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-			moviePosterImageView.bottomAnchor.constraint(equalTo:bottomAnchor, constant: -16),
+			moviePosterImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
 			moviePosterImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-			moviePosterImageView.widthAnchor.constraint(equalToConstant: 100),
+			moviePosterImageView.heightAnchor.constraint(equalToConstant: 120),
+			moviePosterImageView.widthAnchor.constraint(equalToConstant: 90),
 			
 			movieTitleLabel.leadingAnchor.constraint(equalTo: moviePosterImageView.trailingAnchor, constant: 16),
-			movieTitleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+			movieTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+			movieTitleLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -16),
 			
 			movieReleaseLabel.leadingAnchor.constraint(equalTo: movieTitleLabel.leadingAnchor),
-			movieReleaseLabel.centerYAnchor.constraint(equalTo: movieTitleLabel.centerYAnchor, constant: 24),
+			movieReleaseLabel.topAnchor.constraint(equalTo: movieTitleLabel.bottomAnchor, constant: 4),
 		])
 	}
 	
