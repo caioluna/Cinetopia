@@ -38,7 +38,7 @@ class MovieTableViewCell: UITableViewCell {
 	func configureCell(movie: Movie) {
 		movieTitleLabel.text = movie.title
 		moviePosterImageView.image = UIImage(named: movie.image)
-		movieReleaseLabel.text = "Lançamento \(movie.releadeDate)"
+		movieReleaseLabel.text = "Lançamento \(movie.releaseDate)"
 	}
 	
 	private func addSubviews() {
